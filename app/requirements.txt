@@ -2,4 +2,3 @@ flask
 gunicorn
 gevent
 mysqlclient
-mysql-python
