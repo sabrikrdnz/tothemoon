@@ -38,6 +38,7 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: 'junit/test-results.xml'
+        failTaskOnFailedTests: false
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: Cobertura
