@@ -31,10 +31,10 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'tothemoon_acr'
         tags: |
           $(tag)
-    # Deploy services when pipeline triggered. 
+          
     - task: SSH@0
       inputs:
         sshEndpoint: 'bastion'
