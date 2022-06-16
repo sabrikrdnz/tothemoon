@@ -5,7 +5,7 @@
     ansible_ssh_private_key_file: ./id_rsa
   tasks:
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+      shell: kubeadm init --ignore-preflight-errors=NumCPU --pod-network-cidr=10.244.0.0/16
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
@@ -25,17 +25,17 @@
         remote_src: yes
         owner: kube
 
-    - name: install Pod network
-      become: yes
-      become_user: kube
-      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml 
-      args:
-        chdir: $HOME
-        
+    - name: copies admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/skyfall/.kube/config
+        remote_src: yes
+        owner: skyfall
+
     - name: Get the token for joining the worker nodes
       become: yes
       become_user: kube
-      shell: kubeadm token create  --print-join-command
+      shell: sudo kubeadm token create  --print-join-command
       register: kubernetes_join_command
 
     - debug:
@@ -44,3 +44,7 @@
     - name: Copy join command to local file.
       become: yes
       local_action: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
+
+    - name: Copy config file to bastion
+      become: yes
+      local_action: copy source="~/.kube/config" dest="~/.kube/config" mode=0777

@@ -58,8 +58,14 @@ cd tothemoon
 
 mv ~/id_rsa ~/tothemoon/ansible/.
 
-echo "Test hosts.."
-ansible -i hosts all -m ping
+# Setting host key checking false
+export ANSIBLE_HOST_KEY_CHECKING=False
+
+# Creating id_rsa.pub for master&worker nodes
+ssh-keygen -t rsa -N "" -f ./k8s.pub
+
+scp -i tothemoon/ansible/id_rsa /home/bastion/.ssh/k8s.pub skyfall@10.0.1.8:/home/skyfall/.ssh/id_rsa.pub
+scp -i tothemoon/ansible/id_rsa /home/bastion/.ssh/k8s.pub skyfall@10.0.1.9:/home/skyfall/.ssh/id_rsa.pub
 
 echo "Creating users.."
 ansible-playbook -i hosts users.yml

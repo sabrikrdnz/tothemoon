@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.name }}"
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    app: "{{ .Values.name }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Values.name }}"
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.name }}"
+        commitId: "{{ .Values.image.commitId }}"
+    spec:
+      containers:
+      - name: "{{ .Values.name }}"
+        image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }} 
+        ports:
+        - containerPort: {{ .Values.image.port }}
+      env:
+        - name: MYSQL_USERNAME
+          value: {{ .Values.envVariables.mysqlusername }}
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysqlpass
+              key: "{{ .Values.envVariables.mysqlpassword }}"
+        - name: MYSQL_INSTANCE_NAME
+          value: "{{ .Values.envVariables.mysqlinstance }}"
+        - name: MYSQL_PORT_3306_TCP_ADDR
+          value: {{ .Values.envVariables.mysqlhost }}
+        - name: MYSQL_PORT_3306_TCP_PORT
+          value: {{ .Values.envVariables.mysqlport }}
