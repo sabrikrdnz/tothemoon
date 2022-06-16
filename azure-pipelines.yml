@@ -34,3 +34,13 @@ stages:
         containerRegistry: 'tothemoon_acr'
         tags: |
           $(tag)
+
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'bastion'
+        runOptions: 'commands'
+        commands: |
+          cd tothemoon
+          git pull
+          sh /home/bastion/tothemoon/deploy.sh
+        readyTimeout: '20000'
