@@ -1,0 +1,23 @@
+name: tothemoon
+namespace: dev
+replicaCount: 2
+
+image:
+  registry: tothemoon.azurecr.io
+  name: apollov01
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+  port: 3000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+envVariables:
+  mysqlusername: dbuser
+  mysqlpassword: passwd
+  mysqlinstance: python-db
+  mysqlhost: mysql.dev.svc.cluster.local
+  mysqlport: 3306

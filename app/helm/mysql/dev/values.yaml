@@ -1,0 +1,22 @@
+name: mysql
+namespace: dev
+replicaCount: 1
+
+image:
+  registry: tothemoon.azurecr.io
+  name: mysql
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+  port: 3000
+
+service:
+  type: ClusterIP
+  port: 3306
+  targetPort: 3306
+
+envVariables:
+  mysqlusername: dbuser
+  mysqlpassword: passwd
+  mysqldb: python-db
+  mysqlrootpasswd: passwd
