@@ -58,11 +58,11 @@ resource "azurerm_linux_virtual_machine" "master" {
   }
 
   computer_name                   = "master"
-  admin_username                  = "master"
+  admin_username                  = "skyfall"
   disable_password_authentication = true
 
   admin_ssh_key {
-    username   = "master"
+    username   = "skyfall"
     public_key = var.tlskey
   }
 
@@ -97,11 +97,11 @@ resource "azurerm_linux_virtual_machine" "worker" {
   }
 
   computer_name                   = "worker"
-  admin_username                  = "worker"
+  admin_username                  = "skyfall"
   disable_password_authentication = true
 
   admin_ssh_key {
-    username   = "worker"
+    username   = "skyfall"
     public_key = var.tlskey
   }
 
