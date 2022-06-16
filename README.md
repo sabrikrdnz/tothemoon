@@ -20,4 +20,4 @@ Before execute the script you should provide some informations in terraform.tfva
     client_secret = "****************************"
     tenant_id = "****************************"
 
-![](https://github.com/sabrikrdnz/tothemoon/blob/main/diagram.png)
+![](https://i.imgur.com/HEJQ69R.png)
