@@ -34,3 +34,13 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    # Deploy services when pipeline triggered. 
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'bastion'
+        runOptions: 'commands'
+        commands: |
+          cd tothemoon
+          git pull
+          sh /home/bastion/tothemoon/deploy.sh
+        readyTimeout: '20000'

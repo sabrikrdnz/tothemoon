@@ -39,7 +39,10 @@ spec:
         - name: MYSQL_DATABASE
           value: "{{ .Values.envVariables.mysqldb }}"
         - name: MYSQL_ROOT_PASSWORD
-          value: {{ .Values.envVariables.mysqlrootpasswd }}
+          valueFrom:
+            secretKeyRef:
+              name: mysqlpass
+              key: "{{ .Values.envVariables.mysqlpassword }}"
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
