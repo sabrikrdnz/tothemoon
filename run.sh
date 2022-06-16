@@ -65,6 +65,7 @@ sleep 10
 # Disable host key checking for ansible
 export ANSIBLE_HOST_KEY_CHECKING=False
 
+scp -i id_rsa id_rsa bastion@$PUB_IP:/home/bastion/.
 ssh -i id_rsa bastion@$PUB_IP 'bash -s' < setup_k8s.sh
 
 # running ansible playbook

@@ -56,6 +56,8 @@ echo "Checking out the repository..."
 git clone https://github.com/sabrikrdnz/tothemoon.git
 cd tothemoon
 
+mv ~/id_rsa ~/tothemoon/ansible/.
+
 echo "Test hosts.."
 ansible -i hosts all -m ping
 
