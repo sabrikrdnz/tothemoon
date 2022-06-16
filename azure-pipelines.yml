@@ -34,7 +34,7 @@ stages:
         containerRegistry: 'tothemoon_acr'
         tags: |
           $(tag)
-
+          
     - task: SSH@0
       inputs:
         sshEndpoint: 'bastion'

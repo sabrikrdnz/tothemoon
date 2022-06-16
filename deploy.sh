@@ -20,8 +20,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
 # Deploying MYSQL
 cd /home/bastion/tothemoon/app/helm/mysql/
-helm upgrade --debug --install --namespace dev mysql -f ./app/helm/mysql/dev/values.yaml --kubeconfig ~/.kube/config
+helm upgrade --debug --install --namespace dev mysql -f /home/bastion/tothemoon/app/helm/mysql/dev/values.yaml . --kubeconfig ~/.kube/config
 
 # Deploying ApolloV01
 cd /home/bastion/tothemoon/app/helm/apollov01/
-helm upgrade --debug --install --namespace dev apollov01 -f ./app/helm/app/dev/values.yaml --kubeconfig ~/.kube/config
+helm upgrade --debug --install --namespace dev apollov01 -f /home/bastion/tothemoon/app/helm/apollov01/dev/values.yaml . --kubeconfig ~/.kube/config
